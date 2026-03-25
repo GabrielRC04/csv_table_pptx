@@ -14,18 +14,33 @@ prs = Presentation()
 title_only_slide_layout = prs.slide_layouts[5]
 slide = prs.slides.add_slide(title_only_slide_layout)
 shapes = slide.shapes
+shapes.title.text = ' '
+from pptx.dml.color import RGBColor
 
+background = slide.background
+fill = background.fill
+fill.solid()
+fill.fore_color.rgb = RGBColor(241, 226, 195)
 
-shapes.title.text = 'Escala Equipe de Som \n Matriz São Pedro'
+img_path = '/content/drive/MyDrive/Equipe de Som/Logos/2048x512.png'
+left = Inches(0.2)
+top = Inches(0.2)
+height = Inches(2.4) # Opcional, pode definir largura ou altura
+pic = slide.shapes.add_picture(img_path, left, top, height=height)
+# Você também pode definir pic.width e pic.height após adicionar
+
+# Para remover um fundo específico do slide e usar o do master:
+# slide.follow_master_background = True
+
 linhas = len(datas) + 1  # +1 para o cabeçalho
 colunas = 5
-left = Inches(0.2) 
-top = Inches(2.0)
+left = Inches(0.2)
+top = Inches(2.7)
 width = Inches(9.0)
 height = Inches(2.0)
 
 # Abra e leia o arquivo CSV
-with open('escala.csv', mode='r', encoding='utf-8') as arquivo:
+with open('/content/drive/MyDrive/Equipe de Som/autoescala/escala - escala.csv', mode='r', encoding='utf-8') as arquivo:
     leitor = csv.DictReader(arquivo)
     for linha in leitor:
         datas.append(linha['Data'])
